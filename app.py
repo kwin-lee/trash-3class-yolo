@@ -330,12 +330,355 @@ st.markdown("""
     }
 
     h1, h2, h3, h4, h5, h6, p, label, span {
-        color: #1B5E20;
+        color: #1B5E20 !important;
     }
+            
+    /* =========================
+    FORCE LIGHT MODE BASE
+    Prevent mengikuti dark mode Windows/browser
+    ========================= */
+
+    :root {
+        color-scheme: light !important;
+    }
+
+    html, body, .stApp {
+        color-scheme: light !important;
+        background-color: #F1F8E9 !important;
+    }
+
+    .stApp {
+        background:
+            radial-gradient(circle at top left, rgba(76, 175, 80, 0.22), transparent 35%),
+            radial-gradient(circle at bottom right, rgba(255, 193, 7, 0.18), transparent 35%),
+            linear-gradient(135deg, #f1f8e9 0%, #ffffff 45%, #e8f5e9 100%) !important;
+    }
+
+    /* Force main text */
+    h1, h2, h3, h4, h5, h6,
+    p, span, label, li,
+    div,
+    [data-testid="stMarkdownContainer"],
+    [data-testid="stMarkdownContainer"] *,
+    [data-testid="stSidebar"] *,
+    [data-testid="stWidgetLabel"],
+    [data-testid="stWidgetLabel"] *,
+    [data-testid="stRadio"] *,
+    [data-testid="stSlider"] *,
+    [data-testid="stFileUploader"] *,
+    [data-testid="stMetric"] * {
+        color: #1B5E20 !important;
+    }
+
+    /* Sidebar light */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #dcedc8 0%, #f1f8e9 100%) !important;
+        border-right: 1px solid rgba(46, 125, 50, 0.12) !important;
+    }
+
+    /* Cards light */
+    .hero-card,
+    .section-card,
+    .result-card,
+    [data-testid="stMetric"] {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid rgba(76, 175, 80, 0.16) !important;
+        box-shadow: 0 10px 28px rgba(46, 125, 50, 0.09) !important;
+    }
+
+    /* Subtitle / muted text */
+    .hero-subtitle,
+    .small-muted,
+    .footer-note,
+    [data-testid="stImageCaption"],
+    [data-testid="stImageCaption"] * {
+        color: #2E7D32 !important;
+    }
+
+    /* File uploader light */
+    [data-testid="stFileUploader"] {
+        background: rgba(232, 245, 233, 0.55) !important;
+        border: 2px dashed rgba(76, 175, 80, 0.35) !important;
+        border-radius: 18px !important;
+    }
+
+    /* Inputs / radio / slider containers */
+    input,
+    textarea,
+    select,
+    [data-baseweb="select"],
+    [data-baseweb="input"],
+    [data-baseweb="textarea"] {
+        color: #1B5E20 !important;
+        background-color: #FFFFFF !important;
+    }
+
+    /* Alerts light */
+    .stAlert {
+        background: rgba(255, 255, 255, 0.92) !important;
+        border: 1px solid rgba(76, 175, 80, 0.18) !important;
+        border-radius: 16px !important;
+    }
+
+    .stAlert * {
+        color: #1B5E20 !important;
+    }
+
+    /* Buttons stay white text */
+    .stButton > button,
+    .stButton > button *,
+    .stButton > button p,
+    .stButton > button span {
+        color: white !important;
+    }
+            
+    /* CATEGORY TEXT - LIGHT MODE */
+    .hero-subtitle .cat-text {
+        font-weight: 800 !important;
+    }
+
+    .hero-subtitle .cat-organik,
+    .hero-subtitle .cat-organik *,
+    .hero-subtitle .cat-organik b {
+        color: #43A047 !important;
+    }
+
+    .hero-subtitle .cat-anorganik,
+    .hero-subtitle .cat-anorganik *,
+    .hero-subtitle .cat-anorganik b {
+        color: #F9A825 !important;
+    }
+
+    .hero-subtitle .cat-b3,
+    .hero-subtitle .cat-b3 *,
+    .hero-subtitle .cat-b3 b {
+        color: #E53935 !important;
+    }
+                
 </style>
 
 <div class="top-accent"></div>
 """, unsafe_allow_html=True)
+
+def apply_dark_theme():
+    st.markdown("""
+    <style>
+        .stApp {
+            background:
+                radial-gradient(circle at top left, rgba(76, 175, 80, 0.20), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(255, 193, 7, 0.12), transparent 34%),
+                linear-gradient(135deg, #07140B 0%, #0F2415 48%, #132B1A 100%) !important;
+            color: #DDF8E4 !important;
+        }
+
+        .stApp *:not(button):not(button *) {
+            color: #DDF8E4 !important;
+        }
+
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, #07140B 0%, #102B18 100%) !important;
+            border-right: 1px solid rgba(165, 214, 167, 0.22) !important;
+        }
+
+        .hero-card,
+        .section-card,
+        .result-card,
+        [data-testid="stMetric"],
+        [data-testid="stFileUploader"],
+        [data-testid="stAlert"] {
+            background: rgba(18, 38, 24, 0.92) !important;
+            border-color: rgba(165, 214, 167, 0.24) !important;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.34) !important;
+        }
+
+        .hero-subtitle,
+        .small-muted,
+        .footer-note,
+        [data-testid="stImageCaption"],
+        [data-testid="stImageCaption"] * {
+            color: #A5D6A7 !important;
+        }
+
+        .tag-green {
+            background: rgba(76, 175, 80, 0.20) !important;
+            color: #DDF8E4 !important;
+        }
+
+        .tag-yellow {
+            background: rgba(255, 193, 7, 0.20) !important;
+            color: #FFF8E1 !important;
+        }
+
+        .tag-red {
+            background: rgba(229, 57, 53, 0.20) !important;
+            color: #FFCDD2 !important;
+        }
+
+        .result-organik {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.24), rgba(18, 38, 24, 0.96)) !important;
+            border-left: 10px solid #43A047 !important;
+        }
+
+        .result-anorganik {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.24), rgba(18, 38, 24, 0.96)) !important;
+            border-left: 10px solid #FFC107 !important;
+        }
+
+        .result-b3 {
+            background: linear-gradient(135deg, rgba(229, 57, 53, 0.24), rgba(18, 38, 24, 0.96)) !important;
+            border-left: 10px solid #E53935 !important;
+        }
+
+        .stButton > button,
+        .stButton > button *,
+        .stButton > button p,
+        .stButton > button span {
+            color: white !important;
+        }
+
+        input,
+        textarea,
+        select {
+            background-color: rgba(18, 38, 24, 0.95) !important;
+            color: #DDF8E4 !important;
+        }
+                
+        /* =========================
+           FIX STREAMLIT HEADER / TOP BAR
+        ========================= */
+        header[data-testid="stHeader"],
+        [data-testid="stHeader"] {
+            background: #07140B !important;
+            color: #DDF8E4 !important;
+            border-bottom: 1px solid rgba(165, 214, 167, 0.22) !important;
+        }
+
+        [data-testid="stToolbar"],
+        [data-testid="stToolbar"] *,
+        [data-testid="stDecoration"],
+        [data-testid="stStatusWidget"],
+        [data-testid="stStatusWidget"] *,
+        .stDeployButton,
+        .stDeployButton *,
+        .stDeployButton button,
+        .stDeployButton button * {
+            color: #DDF8E4 !important;
+            background-color: transparent !important;
+        }
+
+        .stDeployButton button {
+            border: 1px solid rgba(165, 214, 167, 0.28) !important;
+            background: rgba(18, 38, 24, 0.85) !important;
+            color: #DDF8E4 !important;
+        }
+        
+        /* =========================
+           FIX FILE UPLOADER WHITE AREA
+        ========================= */
+        [data-testid="stFileUploader"] {
+            background: rgba(18, 38, 24, 0.92) !important;
+            border: 1px solid rgba(165, 214, 167, 0.24) !important;
+            border-radius: 18px !important;
+            padding: 14px !important;
+        }
+
+        [data-testid="stFileUploader"] section,
+        [data-testid="stFileUploader"] section *,
+        [data-testid="stFileUploaderDropzone"],
+        [data-testid="stFileUploaderDropzone"] {
+            background: rgba(18, 38, 24, 0.95) !important;
+            color: #DDF8E4 !important;
+            border-color: rgba(165, 214, 167, 0.32) !important;
+        }
+
+        [data-testid="stFileUploaderDropzone"] {
+            border: 2px dashed rgba(165, 214, 167, 0.32) !important;
+            border-radius: 16px !important;
+        }
+
+        [data-testid="stFileUploaderDropzone"] div,
+        [data-testid="stFileUploaderDropzone"] span,
+        [data-testid="stFileUploaderDropzone"] small,
+        [data-testid="stFileUploaderDropzone"] p,
+        [data-testid="stFileUploaderDropzoneInstructions"],
+        [data-testid="stFileUploaderDropzoneInstructions"] * {
+            color: #DDF8E4 !important;
+        }
+
+        [data-testid="stFileUploader"] button,
+        [data-testid="stFileUploaderDropzone"] button {
+            background: rgba(76, 175, 80, 0.18) !important;
+            color: #DDF8E4 !important;
+            border: 1px solid rgba(165, 214, 167, 0.36) !important;
+            border-radius: 10px !important;
+        }
+        
+        [data-testid="stFileUploader"] button *,
+        [data-testid="stFileUploaderDropzone"] button * {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            color: #DDF8E4 !important;
+        }
+        
+        [data-testid="stFileUploader"] button svg,
+        [data-testid="stFileUploaderDropzone"] button svg {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            color: #DDF8E4 !important;
+        }
+
+        [data-testid="stFileUploader"] button:hover,
+        [data-testid="stFileUploaderDropzone"] button:hover {
+            background: rgba(76, 175, 80, 0.32) !important;
+            color: #FFFFFF !important;
+        }
+
+        /* =========================
+           FIX EMPTY / WHITE STREAMLIT BLOCKS
+        ========================= */
+        [data-testid="stVerticalBlock"],
+        [data-testid="stHorizontalBlock"],
+        [data-testid="column"] {
+            background: transparent !important;
+        }
+
+        /* =========================
+           FINAL FORCE TEXT DARK MODE
+        ========================= */
+        .stApp *:not(button):not(button *) {
+            color: #DDF8E4 !important;
+        }
+
+        .stButton > button,
+        .stButton > button *,
+        [data-testid="stFileUploader"] button,
+        [data-testid="stFileUploader"] button * {
+            color: #DDF8E4 !important;
+        }
+                
+        /* CATEGORY TEXT - DARK MODE */
+        .hero-subtitle .cat-organik,
+        .hero-subtitle .cat-organik *,
+        .hero-subtitle .cat-organik b {
+            color: #81C784 !important;
+        }
+
+        .hero-subtitle .cat-anorganik,
+        .hero-subtitle .cat-anorganik *,
+        .hero-subtitle .cat-anorganik b {
+            color: #FFD54F !important;
+        }
+
+        .hero-subtitle .cat-b3,
+        .hero-subtitle .cat-b3 *,
+        .hero-subtitle .cat-b3 b {
+            color: #EF9A9A !important;
+        }
+                
+    </style>
+    """, unsafe_allow_html=True)
 
 # =========================
 # HELPER FUNCTION
@@ -343,19 +686,21 @@ st.markdown("""
 def render_header():
     st.markdown("""
     <div class="hero-card">
-        <div class="hero-title">♻️ Smart Waste Detection</div>
+        <div class="hero-title">♻️ SMARTBIN</div>
         <div class="hero-subtitle">
-            Website sederhana untuk mendeteksi jenis sampah menggunakan YOLO dan memberikan rekomendasi tempat pembuangan:
-            <b>Organik</b>, <b>Anorganik</b>, dan <b>B3</b>.
+            <b>AI-Powered Waste Classification System</b><br>
+            Mendeteksi jenis sampah menggunakan model YOLO dan memberikan rekomendasi tempat pembuangan:
+            <span class="cat-text cat-organik"><b>Organik</b></span>,
+            <span class="cat-text cat-anorganik"><b>Anorganik</b></span>,
+            <span class="cat-text cat-b3"><b>B3</b></span>.
         </div>
         <div class="tag-row">
-            <div class="tag tag-green">🌿 Organik</div>
-            <div class="tag tag-yellow">🥫 Anorganik</div>
-            <div class="tag tag-red">⚠️ B3</div>
+            <div class="tag tag-green">🌿 Organic Waste</div>
+            <div class="tag tag-yellow">🥫 Inorganic Waste</div>
+            <div class="tag tag-red">⚠️ Hazardous Waste</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
-
 
 def normalize_class_name(class_name):
     """
@@ -410,11 +755,37 @@ def render_trashcans(detected_classes):
     <html>
     <head>
     <style>
+        * {{
+            box-sizing: border-box;
+        }}
+
         body {{
             margin: 0;
             padding: 0;
             background: transparent;
             font-family: Arial, sans-serif;
+        }}
+
+        :root {{
+            --bin-container-bg: linear-gradient(135deg, #e8f5e9, #ffffff);
+            --bin-card-bg: rgba(255, 255, 255, 0.92);
+            --bin-border: rgba(76, 175, 80, 0.25);
+            --bin-shadow: 0 10px 25px rgba(46, 125, 50, 0.10);
+
+            --label-text-green: #ffffff;
+            --label-text-yellow: #3E2723;
+            --label-text-red: #ffffff;
+        }}
+
+        :root {{
+            --bin-container-bg: linear-gradient(135deg, #07140B, #132B1A);
+            --bin-card-bg: rgba(24, 50, 31, 0.94);
+            --bin-border: rgba(165, 214, 167, 0.24);
+            --bin-shadow: 0 14px 28px rgba(0, 0, 0, 0.34);
+
+            --label-text-green: #F1FFF4;
+            --label-text-yellow: #3E2723;
+            --label-text-red: #FFF5F5;
         }}
 
         .trash-container {{
@@ -424,10 +795,10 @@ def render_trashcans(detected_classes):
             gap: 36px;
             flex-wrap: wrap;
             padding: 28px;
-            background: linear-gradient(135deg, #e8f5e9, #ffffff);
+            background: var(--bin-container-bg);
             border-radius: 26px;
-            border: 1px solid rgba(76, 175, 80, 0.25);
-            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.10);
+            border: 1px solid var(--bin-border);
+            box-shadow: var(--bin-shadow);
         }}
 
         .trashcan {{
@@ -437,21 +808,21 @@ def render_trashcans(detected_classes):
             width: 135px;
             padding: 18px 12px;
             border-radius: 22px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(76, 175, 80, 0.18);
+            background: var(--bin-card-bg);
+            border: 1px solid var(--bin-border);
             transition: all 0.25s ease;
         }}
 
         .trashcan.open {{
             transform: translateY(-6px);
-            box-shadow: 0 14px 28px rgba(46, 125, 50, 0.18);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
         }}
 
         .trashcan svg {{
             width: 88px;
             height: 110px;
             overflow: visible;
-            filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.14));
+            filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.18));
         }}
 
         .lid {{
@@ -470,8 +841,8 @@ def render_trashcans(detected_classes):
             text-align: center;
             padding: 7px 14px;
             border-radius: 999px;
-            color: white;
             min-width: 106px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
         }}
 
         .hijau svg {{
@@ -480,6 +851,7 @@ def render_trashcans(detected_classes):
 
         .hijau .bin-label {{
             background: #43A047;
+            color: var(--label-text-green);
         }}
 
         .kuning svg {{
@@ -488,7 +860,7 @@ def render_trashcans(detected_classes):
 
         .kuning .bin-label {{
             background: #FFC107;
-            color: #3E2723;
+            color: var(--label-text-yellow);
         }}
 
         .merah svg {{
@@ -497,6 +869,7 @@ def render_trashcans(detected_classes):
 
         .merah .bin-label {{
             background: #E53935;
+            color: var(--label-text-red);
         }}
     </style>
     </head>
@@ -542,7 +915,7 @@ def render_trashcans(detected_classes):
     </html>
     """
 
-    components.html(html_code, height=260, scrolling=False)
+    components.html(html_code, height=285, scrolling=False)
 
 
 def render_detection_cards(detections):
@@ -623,22 +996,17 @@ def predict_image(image, model, conf_threshold):
 
 
 # =========================
-# MAIN APP
-# =========================
-render_header()
-
-try:
-    model = load_model()
-except Exception as e:
-    st.error(f"❌ Gagal memuat model: {e}")
-    st.stop()
-
-
-# =========================
 # SIDEBAR
 # =========================
 with st.sidebar:
     st.markdown("## ⚙️ Pengaturan")
+    theme_mode = st.radio(
+        "Tema tampilan:",
+        ["Light", "Dark"],
+        index=0,
+        horizontal=True
+    )
+
     st.markdown("Atur sumber gambar dan batas minimum confidence model.")
 
     mode = st.radio(
@@ -670,6 +1038,20 @@ with st.sidebar:
     st.markdown("### 📁 Model")
     st.success("Model `best.pt` berhasil dimuat.")
 
+if theme_mode == "Dark":
+    apply_dark_theme()
+
+
+# =========================
+# MAIN APP
+# =========================
+render_header()
+
+try:
+    model = load_model()
+except Exception as e:
+    st.error(f"❌ Gagal memuat model: {e}")
+    st.stop()
 
 # =========================
 # UPLOAD MODE
