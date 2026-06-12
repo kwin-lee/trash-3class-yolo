@@ -13,7 +13,7 @@ import cv2
 # KONFIGURASI HALAMAN
 # =========================
 st.set_page_config(
-    page_title="Smart Waste Detection",
+    page_title="SmartBin: Smart Waste Detection",
     layout="wide",
     page_icon="♻️",
     initial_sidebar_state="expanded"
