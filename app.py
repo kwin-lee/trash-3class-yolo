@@ -7,8 +7,6 @@ from PIL import Image
 import numpy as np
 import cv2
 
-
-
 # =========================
 # KONFIGURASI HALAMAN
 # =========================
@@ -19,9 +17,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-
 # =========================
-# CUSTOM CSS
+# CUSTOM CSS (LIGHT MODE DEFAULT)
 # =========================
 st.markdown("""
 <style>
@@ -185,6 +182,41 @@ st.markdown("""
         border: 2px dashed rgba(76, 175, 80, 0.35);
         border-radius: 18px;
         padding: 14px;
+    }
+
+    /* =======================================
+       PERBAIKAN UPLOADER LIGHT MODE (EDITED)
+       ======================================= */
+    /* Munculkan icon svg (awan/gambar) */
+    [data-testid="stFileUploader"] svg,
+    [data-testid="stFileUploaderDropzone"] svg {
+        color: #FFFFFF !important;
+        fill: currentColor !important;
+    }
+    
+    /* Box file setelah upload */
+    [data-testid="stUploadedFile"] {
+        background-color: #1B5E20 !important;
+        border: 1px solid rgba(76, 175, 80, 0.3) !important;
+        border-radius: 12px !important;
+    }
+    
+    /* Font nama file dan icon svg jadi hijau */
+    [data-testid="stUploadedFile"] *,
+    [data-testid="stUploadedFile"] svg {
+        color: #FFFFFF !important;
+        fill: currentColor !important;
+    }
+    
+    /* Tombol X (hapus file) transparan + efek hover rapi */
+    [data-testid="stUploadedFile"] button {
+        background-color: #1B5E20 !important;
+        color: #FFFFFF !important;
+        border: 2px solid #1B5E20 !important;
+        border-radius: 50% !important;
+    }
+    [data-testid="stUploadedFile"] button:hover {
+        background-color: rgba(76, 175, 80, 0.15) !important;
     }
 
     [data-testid="stMetric"] {
@@ -365,7 +397,6 @@ st.markdown("""
     [data-testid="stWidgetLabel"] *,
     [data-testid="stRadio"] *,
     [data-testid="stSlider"] *,
-    [data-testid="stFileUploader"] *,
     [data-testid="stMetric"] * {
         color: #1B5E20 !important;
     }
@@ -635,6 +666,33 @@ def apply_dark_theme():
             color: #FFFFFF !important;
         }
 
+        /* =======================================
+           PERBAIKAN UPLOADER DARK MODE (EDITED)
+           ======================================= */
+        /* Kotak file dibuat terang agar tulisan hijau gelap terlihat */
+        [data-testid="stUploadedFile"] {
+            background-color: #E8F5E9 !important; 
+            border: 1px solid rgba(165, 214, 167, 0.24) !important;
+            border-radius: 12px !important;
+        }
+
+        /* Paksa font dan svg jadi hijau gelap (ijo gelap jangan terang) */
+        [data-testid="stUploadedFile"] *,
+        [data-testid="stUploadedFile"] svg {
+            color: #1B5E20 !important;
+            fill: currentColor !important;
+        }
+
+        /* Tombol silang transparan dengan efek hover rapi */
+        [data-testid="stUploadedFile"] button {
+            background-color: transparent !important;
+            border: none !important;
+            border-radius: 50% !important;
+        }
+        [data-testid="stUploadedFile"] button:hover {
+            background-color: rgba(76, 175, 80, 0.2) !important;
+        }
+
         /* =========================
            FIX EMPTY / WHITE STREAMLIT BLOCKS
         ========================= */
@@ -743,12 +801,30 @@ def get_card_class(class_name):
     else:
         return "result-unknown"
 
-def render_trashcans(detected_classes):
+def render_trashcans(detected_classes, theme_mode):
     classes = {normalize_class_name(cls) for cls in detected_classes}
 
     org_state = "open" if "organik" in classes else ""
     anorg_state = "open" if "anorganik" in classes else ""
     b3_state = "open" if "b3" in classes else ""
+
+    # Logika tema dipindah ke Python agar CSS yang di-generate akurat
+    if theme_mode == "Dark":
+        bin_container_bg = "linear-gradient(135deg, #07140B, #132B1A)"
+        bin_card_bg = "rgba(24, 50, 31, 0.94)"
+        bin_border = "rgba(165, 214, 167, 0.24)"
+        bin_shadow = "0 14px 28px rgba(0, 0, 0, 0.34)"
+        label_text_green = "#F1FFF4"
+        label_text_yellow = "#3E2723"
+        label_text_red = "#FFF5F5"
+    else:
+        bin_container_bg = "linear-gradient(135deg, #E8F5E9, #FFFFFF)"
+        bin_card_bg = "rgba(255, 255, 255, 0.92)"
+        bin_border = "rgba(76, 175, 80, 0.25)"
+        bin_shadow = "0 10px 25px rgba(46, 125, 50, 0.10)"
+        label_text_green = "#FFFFFF"
+        label_text_yellow = "#3E2723"
+        label_text_red = "#FFFFFF"
 
     html_code = f"""
     <!DOCTYPE html>
@@ -766,26 +842,16 @@ def render_trashcans(detected_classes):
             font-family: Arial, sans-serif;
         }}
 
+        /* Hanya render satu :root sesuai tema yang sedang aktif */
         :root {{
-            --bin-container-bg: linear-gradient(135deg, #e8f5e9, #ffffff);
-            --bin-card-bg: rgba(255, 255, 255, 0.92);
-            --bin-border: rgba(76, 175, 80, 0.25);
-            --bin-shadow: 0 10px 25px rgba(46, 125, 50, 0.10);
+            --bin-container-bg: {bin_container_bg};
+            --bin-card-bg: {bin_card_bg};
+            --bin-border: {bin_border};
+            --bin-shadow: {bin_shadow};
 
-            --label-text-green: #ffffff;
-            --label-text-yellow: #3E2723;
-            --label-text-red: #ffffff;
-        }}
-
-        :root {{
-            --bin-container-bg: linear-gradient(135deg, #07140B, #132B1A);
-            --bin-card-bg: rgba(24, 50, 31, 0.94);
-            --bin-border: rgba(165, 214, 167, 0.24);
-            --bin-shadow: 0 14px 28px rgba(0, 0, 0, 0.34);
-
-            --label-text-green: #F1FFF4;
-            --label-text-yellow: #3E2723;
-            --label-text-red: #FFF5F5;
+            --label-text-green: {label_text_green};
+            --label-text-yellow: {label_text_yellow};
+            --label-text-red: {label_text_red};
         }}
 
         .trash-container {{
@@ -845,38 +911,17 @@ def render_trashcans(detected_classes):
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
         }}
 
-        .hijau svg {{
-            color: #43A047;
-        }}
+        .hijau svg {{ color: #43A047; }}
+        .kuning svg {{ color: #FFC107; }}
+        .merah svg {{ color: #E53935; }}
 
-        .hijau .bin-label {{
-            background: #43A047;
-            color: var(--label-text-green);
-        }}
-
-        .kuning svg {{
-            color: #FFC107;
-        }}
-
-        .kuning .bin-label {{
-            background: #FFC107;
-            color: var(--label-text-yellow);
-        }}
-
-        .merah svg {{
-            color: #E53935;
-        }}
-
-        .merah .bin-label {{
-            background: #E53935;
-            color: var(--label-text-red);
-        }}
+        .hijau .bin-label {{ background: #43A047; color: var(--label-text-green); }}
+        .kuning .bin-label {{ background: #FFC107; color: var(--label-text-yellow); }}
+        .merah .bin-label {{ background: #E53935; color: var(--label-text-red); }}
     </style>
     </head>
-
     <body>
         <div class="trash-container">
-
             <div class="trashcan hijau {org_state}">
                 <svg viewBox="0 0 100 120">
                     <g class="lid" fill="currentColor">
@@ -909,7 +954,6 @@ def render_trashcans(detected_classes):
                 </svg>
                 <div class="bin-label">B3</div>
             </div>
-
         </div>
     </body>
     </html>
@@ -918,11 +962,12 @@ def render_trashcans(detected_classes):
     components.html(html_code, height=285, scrolling=False)
 
 
-def render_detection_cards(detections):
+def render_detection_cards(detections, theme_mode):
     if not detections:
         st.warning("⚠️ Tidak ada objek sampah yang terdeteksi. Silakan coba gambar lain atau turunkan confidence threshold.")
         return
 
+    is_dark = theme_mode == "Dark"
     max_cols = 3
 
     for i in range(0, len(detections), max_cols):
@@ -933,13 +978,55 @@ def render_detection_cards(detections):
             tipe = html.escape(det["Tipe Sampah"])
             akurasi = html.escape(det["Akurasi"])
             rekomendasi = html.escape(det["Rekomendasi"])
-            card_class = get_card_class(tipe)
+            
+            normalized = normalize_class_name(tipe)
+            
+            # Tentukan warna inline berdasarkan tema agar terbebas dari bug caching CSS global
+            if is_dark:
+                text_color = "#DDF8E4"
+                border_col = "rgba(165, 214, 167, 0.24)"
+                if normalized == "organik":
+                    bg_grad = "linear-gradient(135deg, rgba(76, 175, 80, 0.24), rgba(18, 38, 24, 0.96))"
+                    border_left = "#43A047"
+                elif normalized == "anorganik":
+                    bg_grad = "linear-gradient(135deg, rgba(255, 193, 7, 0.24), rgba(18, 38, 24, 0.96))"
+                    border_left = "#FFC107"
+                elif normalized == "b3":
+                    bg_grad = "linear-gradient(135deg, rgba(229, 57, 53, 0.24), rgba(18, 38, 24, 0.96))"
+                    border_left = "#E53935"
+                else:
+                    bg_grad = "linear-gradient(135deg, rgba(120, 144, 156, 0.22), rgba(18, 38, 24, 0.96))"
+                    border_left = "#78909C"
+            else:
+                text_color = "#1B5E20"
+                border_col = "rgba(76, 175, 80, 0.16)"
+                if normalized == "organik":
+                    bg_grad = "linear-gradient(135deg, #E8F5E9, #FFFFFF)"
+                    border_left = "#43A047"
+                elif normalized == "anorganik":
+                    bg_grad = "linear-gradient(135deg, #FFF8E1, #FFFFFF)"
+                    border_left = "#FFC107"
+                elif normalized == "b3":
+                    bg_grad = "linear-gradient(135deg, #FFEBEE, #FFFFFF)"
+                    border_left = "#E53935"
+                else:
+                    bg_grad = "linear-gradient(135deg, #ECEFF1, #FFFFFF)"
+                    border_left = "#78909C"
+
+            # Bangun card dengan style inline agar anti gagal
+            card_style = (
+                f"background: {bg_grad}; "
+                f"border: 1px solid {border_col}; "
+                f"border-left: 10px solid {border_left}; "
+                "min-height: 180px; border-radius: 22px; padding: 24px; margin-bottom: 18px; "
+                "box-shadow: 0 12px 28px rgba(0,0,0,0.05);"
+            )
 
             card_html = (
-                f'<div class="result-card {card_class}">'
-                f'<h4>{tipe}</h4>'
-                f'<p><b>Akurasi:</b> {akurasi}</p>'
-                f'<p style="margin-top:8px;">{rekomendasi}</p>'
+                f'<div style="{card_style}">'
+                f'<h4 style="color: {text_color}; font-size: 22px; font-weight: 800; margin: 0 0 18px 0;">{tipe}</h4>'
+                f'<p style="color: {text_color}; font-size: 16px; margin: 0;"><b>Akurasi:</b> {akurasi}</p>'
+                f'<p style="color: {text_color}; font-size: 16px; margin-top: 8px;">{rekomendasi}</p>'
                 f'</div>'
             )
 
@@ -1111,12 +1198,12 @@ if mode == "📤 Upload Gambar":
     if uploaded_file is not None and analyze_button:
         st.markdown('<div class="section-card">', unsafe_allow_html=True)
         st.markdown('<div class="section-title">🗑️ Rekomendasi Pembuangan</div>', unsafe_allow_html=True)
-        render_trashcans(detected_classes)
+        render_trashcans(detected_classes, theme_mode)
         st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown('<div class="section-card">', unsafe_allow_html=True)
         st.markdown('<div class="section-title">📊 Detail Klasifikasi</div>', unsafe_allow_html=True)
-        render_detection_cards(detections)
+        render_detection_cards(detections, theme_mode)
         st.markdown('</div>', unsafe_allow_html=True)
 
 
@@ -1161,12 +1248,12 @@ elif mode == "📸 Webcam":
         with col2:
             st.markdown('<div class="section-card">', unsafe_allow_html=True)
             st.markdown('<div class="section-title">📊 Detail Klasifikasi</div>', unsafe_allow_html=True)
-            render_detection_cards(detections)
+            render_detection_cards(detections, theme_mode)
             st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown('<div class="section-card">', unsafe_allow_html=True)
         st.markdown('<div class="section-title">🗑️ Rekomendasi Pembuangan</div>', unsafe_allow_html=True)
-        render_trashcans(detected_classes)
+        render_trashcans(detected_classes, theme_mode)
         st.markdown('</div>', unsafe_allow_html=True)
 
 
